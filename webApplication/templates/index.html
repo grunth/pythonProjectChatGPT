@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Загрузка файла и использование Ollama</title>
+</head>
+<body>
+    <h1>Загрузите файл с вопросом</h1>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".txt">
+        <button type="submit">Загрузить и отправить</button>
+    </form>
+
+    {% if question %}
+        <h2>Вопрос из файла:</h2>
+        <p>{{ question }}</p>
+    {% endif %}
+
+    {% if result %}
+        <h2>Ответ модели:</h2>
+        <p>{{ result }}</p>
+    {% endif %}
+</body>
+</html>

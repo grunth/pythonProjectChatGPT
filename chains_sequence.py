@@ -8,15 +8,20 @@ llm = Ollama(
     model="llama3"
 )
 
-prompt = ChatPromptTemplate.from_template("tell me a joke about {topic}")
+# Step 1: Define the prompt for generating a joke
+prompt = ChatPromptTemplate.from_template("")
+joke_chain = prompt | llm | StrOutputParser()
 
-chain = prompt | llm | StrOutputParser()
-
+# Step 2: Define the prompt for analyzing the joke
 analysis_prompt = ChatPromptTemplate.from_template("is this a funny joke? {joke}")
+analysis_chain = analysis_prompt | llm | StrOutputParser()
 
-composed_chain = {"joke": chain} | analysis_prompt | llm | StrOutputParser()
+# Generate a joke
+joke = joke_chain.invoke({"topic": "bears"})
+print("Generated joke:")
+print(joke)
 
-# Invoke the composed chain and print the result
-result = composed_chain.invoke({"topic": "bears"})
-print("Response from LangChain:")
-print(result)
+# Analyze the joke
+analysis_result = analysis_chain.invoke({"joke": joke})
+print("Analysis result:")
+print(analysis_result)

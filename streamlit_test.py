@@ -1,19 +1,20 @@
 import streamlit as st
 from langchain_community.llms import Ollama
 
-llm = Ollama(
-    model="llama3"
-)
+# Инициализация модели
+llm = Ollama(model="llama3")
 
 def generate_response(input_text):
-  st.info(llm(input_text))
+    # Генерация ответа с помощью модели
+    response = llm.invoke(input_text)
+    # Вывод ответа на экран
+    st.info(response)
 
-#Step 4 - here we write a quick streamlit application that accepts text input (question) and
-# on clicking a 'submit button call a function that generates response
-
+# Создание Streamlit приложения
 st.title('🦜🔗 Welcome to the ChatBot')
 with st.form('my_form'):
-  text = st.text_area('Enter text:', 'What are the three key pieces of advice for learning how to code?')
-  submitted = st.form_submit_button('Submit')
-  if submitted :
-    generate_response(text)
+    text = st.text_area('Enter text:', 'What are the three key pieces of advice for learning how to code?')
+    submitted = st.form_submit_button('Submit')
+    if submitted:
+        generate_response(text)
+
