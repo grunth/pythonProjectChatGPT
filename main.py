@@ -9,7 +9,7 @@ import time
 load_dotenv()
 
 # Get the API key from the environment variables
-#KEY HERE
+OPENAI_API_KEY = 'asdasdasdasd'
 
 if not OPENAI_API_KEY:
     raise ValueError("OpenAI API key not found. Please set it in the .env file.")
