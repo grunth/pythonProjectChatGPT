@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Анализ кода и выполнение инструкций</title>
+</head>
+<body>
+    <h1>Загрузите файл с инструкциями и укажите папку с кодом</h1>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <label for="directory">Путь к директории с кодом:</label>
+        <input type="text" name="directory" id="directory" placeholder="Укажите путь к директории" required>
+        <br>
+        <label for="file">Загрузите файл с инструкцией:</label>
+        <input type="file" name="file" accept=".txt" required>
+        <br>
+        <button type="submit">Проанализировать и выполнить</button>
+    </form>
+
+    {% if question %}
+        <h2>Инструкция:</h2>
+        <p>{{ question }}</p>
+    {% endif %}
+
+    {% if result %}
+        <h2>Ответ модели:</h2>
+        <p>{{ result }}</p>
+    {% endif %}
+</body>
+</html>
