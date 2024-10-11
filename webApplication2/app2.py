@@ -26,11 +26,11 @@ def read_files_in_directory(directory_path):
     code_content = ""
     for root, dirs, files in os.walk(directory_path):
         for file in files:
-            if file.endswith(".ts") or file.endswith(".html") or file.endswith(".css"):
+            if file.endswith(".ts") or file.endswith(".html") or file.endswith(".css"):  # Указываем нужные расширения файлов
                 file_path = os.path.join(root, file)
-                with open(file_path, 'r', encoding='utf-8') as f:
-                    code_content += f"\n\n--- {file} ---\n\n"
-                    code_content += f.read()
+                with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:  # Игнорируем ошибки кодировки
+                    code_content += f"\n\n--- {file} ---\n\n"  # Добавляем имя файла для контекста
+                    code_content += f.read()  # Добавляем содержимое файла
     return code_content
 
 
@@ -54,15 +54,19 @@ def upload_file():
     with open(file_path, 'r', encoding='utf-8') as f:
         instruction_content = f.read()
 
-    # Чтение всех файлов из указанной директории
+    # Чтение всех файлов из указанной директории (код)
     code_content = read_files_in_directory(directory)
 
-    # Формирование полного промта: инструкции + код
+    # Проверяем, что код действительно был прочитан
+    if not code_content:
+        return render_template('index.html', result='Кодовые файлы в указанной директории не найдены или не удалось их прочитать.', question=None)
+
+    # Формирование полного промпта: инструкции + код
     prompt = ChatPromptTemplate.from_template(
         "{instruction_content}\n\nAnalyze the following code and make changes as per the instructions:\n\n{code_content}")
     analysis_chain = prompt | llm | StrOutputParser()
 
-    # Получение ответа от модели Ollama
+    # Получение ответа от модели Ollama с полным контекстом (инструкция + код)
     response = analysis_chain.invoke({"instruction_content": instruction_content, "code_content": code_content})
 
     # Отправка результата обратно на страницу
