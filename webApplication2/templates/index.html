@@ -4,34 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Code Analysis and Instruction Execution</title>
-     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"> <!-- Правильное подключение CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"> <!-- Правильное подключение CSS -->
+    <!-- Prism.js for syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
+
 </head>
 <body>
-    <div class="container">
-        <h1>Upload Instructions & Analyze Code</h1>
-        <form action="/upload" method="POST" enctype="multipart/form-data">
-            <label for="directory">Directory Path for Code:</label>
-            <input type="text" name="directory" id="directory" placeholder="Enter the code directory path" required>
+<div class="container">
+    <h1>Upload Instructions & Analyze Code</h1>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <label for="directory">Directory Path for Code:</label>
+        <input type="text" name="directory" id="directory" placeholder="Enter the code directory path" required>
 
-            <label for="file">Upload Instruction File:</label>
-            <input type="file" name="file" accept=".txt" required>
+        <label for="file">Upload Instruction File:</label>
+        <input type="file" name="file" id="file" accept=".txt" style="display: none;">
+        <button type="button" onclick="document.getElementById('file').click()">Choose File</button>
 
-            <button type="submit">Analyze and Execute</button>
-        </form>
 
-        {% if question %}
-        <div class="result">
-            <h2>Instruction:</h2>
-            <p>{{ question }}</p>
-        </div>
-        {% endif %}
+        <button type="submit">Analyze and Execute</button>
+    </form>
 
-        {% if result %}
-        <div class="result">
-            <h2>Model's Response:</h2>
-            <p>{{ result }}</p>
-        </div>
-        {% endif %}
+    {% if question %}
+    <div class="result">
+        <h2>Instruction:</h2>
+        <p>{{ question }}</p>
     </div>
+    {% endif %}
+
+
+    {% if result %}
+    <div class="result">
+        <h2>Model's Response:</h2>
+        <pre><code class="language-javascript">{{ result }}</code></pre>
+    </div>
+    {% endif %}
+
+</div>
 </body>
 </html>

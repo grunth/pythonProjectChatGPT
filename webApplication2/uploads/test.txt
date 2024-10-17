@@ -1,1 +1,1 @@
-Можешь кнопку button сделать зеленой и перенести ее вниз экрана. И добавить логику чтобы она к тексту title добавляла еще строку с сегодняшним днем недели
+Can you make the button green and move it to the bottom of the screen. And add logic so that it adds another line with today's day of the week to the title text. Provide only the modified code without explanations.
